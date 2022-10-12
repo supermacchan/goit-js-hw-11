@@ -16,6 +16,7 @@ function fetchImages(query) {
                 Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
             }
             console.log(data.hits);
+            return data.hits;
         })
         .catch(error => {
             console.log(error);

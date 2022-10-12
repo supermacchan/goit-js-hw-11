@@ -8,9 +8,11 @@ form.addEventListener('submit', onSearchSubmit);
 
 function onSearchSubmit(e) {
     e.preventDefault();
-}
+    const query = formInput.value;
+    const fetchedImages = fetchImages(query);
+    console.log(fetchedImages);
 
-fetchImages('cat');
+}
 
 const IMAGE_CARD_MARKUP = `<div class="photo-card">
     <img src="" alt="" loading="lazy" />
