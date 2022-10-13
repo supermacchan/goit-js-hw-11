@@ -1,5 +1,7 @@
 import { fetchImages } from "./fetch-images";
 import Notiflix from 'notiflix';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 
 
 const form = document.querySelector('.search-form');
@@ -17,9 +19,8 @@ async function onSearchSubmit(e) {
     console.log(fetchedImages.hits);
         
     createGallery(fetchedImages);
+    let lightboxGallery = new SimpleLightbox('.gallery a');
 }
-
-
 
 function generateGalleryMarkup(images) {
     return images
@@ -74,3 +75,4 @@ function createGallery(fetchedImages) {
     placeGalleryMarkup(newGallery);
     Notiflix.Notify.success(`Hooray! We found ${fetchedImages.totalHits} images.`);
 }
+
