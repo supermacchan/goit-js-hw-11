@@ -1,33 +1,75 @@
 import { fetchImages } from "./fetch-images";
+import Notiflix from 'notiflix';
+
 
 const form = document.querySelector('.search-form');
 const formInput = document.querySelector('input');
+const imageGallery = document.querySelector('.gallery');
 
 
 form.addEventListener('submit', onSearchSubmit);
 
-function onSearchSubmit(e) {
+async function onSearchSubmit(e) {
     e.preventDefault();
     const query = formInput.value;
-    const fetchedImages = fetchImages(query);
-    console.log(fetchedImages);
-
+    const fetchedImages = await fetchImages(query);
+    
+    console.log(fetchedImages.hits);
+        
+    createGallery(fetchedImages);
 }
 
-const IMAGE_CARD_MARKUP = `<div class="photo-card">
-    <img src="" alt="" loading="lazy" />
-    <div class="info">
-        <p class="info-item">
-            <b>Likes</b>
-        </p>
-        <p class="info-item">
-            <b>Views</b>
-        </p>
-        <p class="info-item">
-            <b>Comments</b>
-        </p>
-        <p class="info-item">
-            <b>Downloads</b>
-        </p>
-    </div>
-</div>`;
+
+
+function generateGalleryMarkup(images) {
+    return images
+        .map(image => {
+            const smallImage = image.webformatURL;
+            const largeImage = image.largeImageURL;
+            const alt = image.tags;
+            const likes = image.likes;
+            const views = image.views;
+            const comments = image.comments;
+            const downloads = image.downloads;
+
+            const IMAGE_CARD_MARKUP = `<a class="photo-card" href="${largeImage}">
+                <img class="gallery-image" src="${smallImage}" alt="${alt}" loading="lazy" />
+                <div class="info">
+                    <p class="info-item">
+                        <b>Likes</b>
+                        ${likes}
+                    </p>
+                    <p class="info-item">
+                        <b>Views</b>
+                        ${views}
+                    </p>
+                    <p class="info-item">
+                        <b>Comments</b>
+                        ${comments}
+                    </p>
+                    <p class="info-item">
+                        <b>Downloads</b>
+                        ${downloads}
+                    </p>
+                </div>
+            </a>`;
+
+            return IMAGE_CARD_MARKUP; 
+        })
+        .join('');
+}
+
+function placeGalleryMarkup(markup) {
+    imageGallery.innerHTML = markup;
+}
+
+function createGallery(fetchedImages) {
+    if (fetchedImages.hits.length === 0) {
+        Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+        imageGallery.innerHTML = '';
+        return;
+    } 
+
+    const newGallery = generateGalleryMarkup(fetchedImages.hits);
+    placeGalleryMarkup(newGallery);
+}
