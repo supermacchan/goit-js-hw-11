@@ -72,4 +72,5 @@ function createGallery(fetchedImages) {
 
     const newGallery = generateGalleryMarkup(fetchedImages.hits);
     placeGalleryMarkup(newGallery);
+    Notiflix.Notify.success(`Hooray! We found ${fetchedImages.totalHits} images.`);
 }
