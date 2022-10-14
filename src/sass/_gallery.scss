@@ -36,3 +36,18 @@
     flex-direction: column;
     margin: 0;
 }
+
+.load-more {
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+    background-color: #3a479c;
+    color: white;
+    text-align: center;
+    padding: 13px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.is-hidden{
+    visibility: hidden;
+}

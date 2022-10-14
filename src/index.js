@@ -2,6 +2,10 @@ import { fetchImages } from "./api-service";
 import { resetPageNumber } from "./api-service";
 import { createGallery } from "./generate-gallery";
 import { addMoreImages } from "./generate-gallery";
+import { makeButtonVisible } from "./load-more-btn";
+import { hideButton } from "./load-more-btn";
+
+import Notiflix from 'notiflix';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
@@ -24,15 +28,24 @@ async function onSearchSubmit(e) {
     console.log(fetchedImages.hits);
         
     createGallery(fetchedImages);
+    makeButtonVisible();
     let lightboxGallery = new SimpleLightbox('.gallery a');
 }
 
 async function handleLoadMore(e) {
-    const moreImages = await fetchImages(query);
+    try {
+        const moreImages = await fetchImages(query);
 
-    console.log(moreImages.hits);
+        console.log(moreImages.hits);
+        console.log(moreImages);
+        console.log(moreImages.totalHits);
 
-    addMoreImages(moreImages);
-    let lightboxGallery = new SimpleLightbox('.gallery a');
+        addMoreImages(moreImages);
+        let lightboxGallery = new SimpleLightbox('.gallery a');
+    } catch (error) {
+        Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
+        hideButton();
+    }
+    
 }
 
