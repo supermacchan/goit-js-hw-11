@@ -29,6 +29,7 @@ async function onSearchSubmit(e) {
         
     createGallery(fetchedImages);
     makeButtonVisible();
+    slowScroll();
     let lightboxGallery = new SimpleLightbox('.gallery a');
 }
 
@@ -42,10 +43,22 @@ async function handleLoadMore(e) {
 
         addMoreImages(moreImages);
         let lightboxGallery = new SimpleLightbox('.gallery a');
+        slowScroll();
     } catch (error) {
         Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
         hideButton();
     }
     
+}
+
+function slowScroll() {
+    const { height: cardHeight } = document
+    .querySelector(".gallery")
+    .firstElementChild.getBoundingClientRect();
+
+    window.scrollBy({
+    top: cardHeight * 11,
+    behavior: "smooth",
+    });
 }
 
