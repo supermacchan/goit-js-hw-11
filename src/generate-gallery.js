@@ -56,5 +56,11 @@ function createGallery(fetchedImages) {
     Notiflix.Notify.success(`Hooray! We found ${fetchedImages.totalHits} images.`);
 }
 
+function addMoreImages(fetchedImages) {
+    const newImages = generateGalleryMarkup(fetchedImages.hits);
+    imageGallery.insertAdjacentHTML('beforeend', newImages);
+}
+
 
 export { createGallery };
+export { addMoreImages };
