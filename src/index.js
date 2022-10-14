@@ -37,5 +37,6 @@ async function handleLoadMore(e) {
     console.log(moreImages.hits);
 
     addMoreImages(moreImages);
+    let lightboxGallery = new SimpleLightbox('.gallery a');
 }
 
