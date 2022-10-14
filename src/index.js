@@ -2,15 +2,11 @@ import { fetchImages } from "./api-service";
 import { resetPageNumber } from "./api-service";
 import { createGallery } from "./generate-gallery";
 import { addMoreImages } from "./generate-gallery";
-// import Notiflix from 'notiflix';
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-
 const form = document.querySelector('.search-form');
-// const formInput = document.querySelector('input');
-// const imageGallery = document.querySelector('.gallery');
-const loadMoreBtn = document.querySelector('[data-action="load-more"]');
+const loadMoreBtn = document.querySelector('.load-more');
 
 let query = '';
 
