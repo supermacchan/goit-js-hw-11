@@ -42,8 +42,8 @@ async function handleLoadMore(e) {
         console.log(moreImages.totalHits);
 
         addMoreImages(moreImages);
-        let lightboxGallery = new SimpleLightbox('.gallery a');
         slowScroll();
+        let lightboxGallery = new SimpleLightbox('.gallery a');
     } catch (error) {
         Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
         hideButton();
