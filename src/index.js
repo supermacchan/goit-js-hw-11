@@ -2,7 +2,6 @@ import { fetchImages } from "./api-service";
 import { resetPageNumber } from "./api-service";
 import { createGallery } from "./generate-gallery";
 import { addMoreImages } from "./generate-gallery";
-import { makeButtonVisible } from "./load-more-btn";
 import { hideButton } from "./load-more-btn";
 
 import Notiflix from 'notiflix';
@@ -29,8 +28,6 @@ async function onSearchSubmit(e) {
     console.log(fetchedImages.hits);
         
     createGallery(fetchedImages);
-    makeButtonVisible();
-    slowScroll();
     lightboxGallery = new SimpleLightbox('.gallery a');
 }
 
@@ -43,7 +40,6 @@ async function handleLoadMore(e) {
         console.log(moreImages.totalHits);
 
         addMoreImages(moreImages);
-        slowScroll();
         lightboxGallery.refresh();
     } catch (error) {
         Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
@@ -52,14 +48,4 @@ async function handleLoadMore(e) {
     
 }
 
-function slowScroll() {
-    const { height: cardHeight } = document
-    .querySelector(".gallery")
-    .firstElementChild.getBoundingClientRect();
-
-    window.scrollBy({
-    top: cardHeight * 11,
-    behavior: "smooth",
-    });
-}
 

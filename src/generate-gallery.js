@@ -1,4 +1,6 @@
 import Notiflix from 'notiflix';
+import { makeButtonVisible } from "./load-more-btn";
+import { hideButton } from "./load-more-btn";
 
 const imageGallery = document.querySelector('.gallery');
 
@@ -48,19 +50,33 @@ function createGallery(fetchedImages) {
     if (fetchedImages.hits.length === 0) {
         Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
         imageGallery.innerHTML = '';
+        hideButton();
         return;
     } 
 
     const newGallery = generateGalleryMarkup(fetchedImages.hits);
     placeGalleryMarkup(newGallery);
+    makeButtonVisible();
+    slowScroll();
     Notiflix.Notify.success(`Hooray! We found ${fetchedImages.totalHits} images.`);
 }
 
 function addMoreImages(fetchedImages) {
     const newImages = generateGalleryMarkup(fetchedImages.hits);
     imageGallery.insertAdjacentHTML('beforeend', newImages);
+    slowScroll();
 }
 
+function slowScroll() {
+    const { height: cardHeight } = document
+    .querySelector(".gallery")
+    .firstElementChild.getBoundingClientRect();
+
+    window.scrollBy({
+    top: cardHeight * 11,
+    behavior: "smooth",
+    });
+}
 
 export { createGallery };
 export { addMoreImages };
