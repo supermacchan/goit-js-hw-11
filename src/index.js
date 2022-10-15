@@ -13,6 +13,7 @@ const form = document.querySelector('.search-form');
 const loadMoreBtn = document.querySelector('.load-more');
 
 let query = '';
+let lightboxGallery;
 
 form.addEventListener('submit', onSearchSubmit);
 loadMoreBtn.addEventListener('click', handleLoadMore);
@@ -30,7 +31,7 @@ async function onSearchSubmit(e) {
     createGallery(fetchedImages);
     makeButtonVisible();
     slowScroll();
-    let lightboxGallery = new SimpleLightbox('.gallery a');
+    lightboxGallery = new SimpleLightbox('.gallery a');
 }
 
 async function handleLoadMore(e) {
@@ -43,7 +44,7 @@ async function handleLoadMore(e) {
 
         addMoreImages(moreImages);
         slowScroll();
-        let lightboxGallery = new SimpleLightbox('.gallery a');
+        lightboxGallery.refresh();
     } catch (error) {
         Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
         hideButton();
