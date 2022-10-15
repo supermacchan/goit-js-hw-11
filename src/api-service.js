@@ -14,7 +14,6 @@ async function fetchImages(query) {
 
         pageNumber += 1;
 
-        console.log(fetchedImages);
         return fetchedImages;
     } catch (error) {
         console.log(error);

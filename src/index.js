@@ -24,9 +24,7 @@ async function onSearchSubmit(e) {
 
     resetPageNumber();
     const fetchedImages = await fetchImages(query);
-    
-    console.log(fetchedImages.hits);
-        
+            
     createGallery(fetchedImages);
     lightboxGallery = new SimpleLightbox('.gallery a');
 }
@@ -35,17 +33,12 @@ async function handleLoadMore(e) {
     try {
         const moreImages = await fetchImages(query);
 
-        console.log(moreImages.hits);
-        console.log(moreImages);
-        console.log(moreImages.totalHits);
-
         addMoreImages(moreImages);
         lightboxGallery.refresh();
     } catch (error) {
         Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
         hideButton();
     }
-    
 }
 
 
