@@ -52,20 +52,26 @@ function createGallery(fetchedImages) {
         imageGallery.innerHTML = '';
         hideButton();
         return;
-    } 
+    }
 
     const newGallery = generateGalleryMarkup(fetchedImages.hits);
     placeGalleryMarkup(newGallery);
-    makeButtonVisible();
-    slowScroll();
     Notiflix.Notify.success(`Hooray! We found ${fetchedImages.totalHits} images.`);
+    makeButtonVisible();
 }
 
 function addMoreImages(fetchedImages) {
     const newImages = generateGalleryMarkup(fetchedImages.hits);
+
+    if (fetchedImages.hits.length < 40) {
+        Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
+        hideButton();
+    }
+
     imageGallery.insertAdjacentHTML('beforeend', newImages);
     slowScroll();
 }
+    
 
 function slowScroll() {
     const { height: cardHeight } = document
@@ -73,7 +79,7 @@ function slowScroll() {
     .firstElementChild.getBoundingClientRect();
 
     window.scrollBy({
-    top: cardHeight * 11,
+    top: cardHeight * 2.3,
     behavior: "smooth",
     });
 }

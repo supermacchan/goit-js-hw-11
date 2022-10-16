@@ -30,15 +30,10 @@ async function onSearchSubmit(e) {
 }
 
 async function handleLoadMore(e) {
-    try {
         const moreImages = await fetchImages(query);
 
         addMoreImages(moreImages);
         lightboxGallery.refresh();
-    } catch (error) {
-        Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
-        hideButton();
-    }
 }
 
 
